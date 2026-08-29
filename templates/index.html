@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Sorgu Otomasyonu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-dark: #0f172a;    /* Koyu Lacivert */
+            --primary-blue: #2563eb;    /* Kurumsal Mavi */
+            --primary-hover: #1d4ed8;   /* Koyu Mavi (Hover) */
+            --bg-color: #beddfa;        /* Arka plan rengi */
+            --border-color: #93c5fd;    /* Uyumlu Kenarlık Rengi */
+            --text-main: #334155;       /* Metin Rengi */
+        }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .bg-primary-dark { background-color: var(--primary-dark) !important; color: white; }
+        .text-primary-blue { color: var(--primary-blue) !important; }
+        
+        /* Margin ve Border-Radius Eklenmiş Üst Menü */
+        .custom-navbar {
+            background-color: var(--primary-dark);
+            margin: 16px 16px 24px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        }
+
+        /* Kart Tasarımı (Sabit) */
+        .card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            background-color: #ffffff;
+        }
+
+        /* Form Elemanları */
+        .form-control, .form-select {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-shadow: none !important;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: #ffffff;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue) !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+        }
+
+        /* Butonlar ve Hover Efekti */
+        .btn-action { 
+            background-color: var(--primary-blue); 
+            color: white; 
+            border: none; 
+            border-radius: 6px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-action:hover { 
+            background-color: var(--primary-hover); 
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        /* Tablo Tasarımı */
+        .table {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        #resultTable thead th {
+            background-color: #f8fafc;
+            color: var(--primary-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky; 
+            top: 0; 
+            z-index: 1;
+        }
+        #resultTable tbody tr {
+            transition: background-color 0.15s ease;
+        }
+        #resultTable tbody tr:hover {
+            background-color: #eff6ff !important;
+        }
+        #resultTable td {
+            vertical-align: middle;
+            border-color: #e2e8f0;
+        }
+
+        /* Alt Bilgi (Footer) Alanları */
+        .card-footer {
+            border-top: 1px solid var(--border-color);
+            background-color: #f8fafc;
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            font-size: 0.85rem;
+        }
+
+        /* Sosyal İkonlar ve Hover Efekti */
+        .social-icon {
+            color: #475569;
+            font-size: 1.5rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .social-icon:hover {
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Sayfa Footer Alanı */
+        .custom-footer {
+            border-top: none;
+            background-color: var(--bg-color);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        /* Tamamen Koyu Mod SQL Alanı */
+        .dark-sql-header {
+            background-color: #0b0f19 !important;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border-bottom: 1px solid #1e293b;
+        }
+        .sql-box {
+            background-color: #030712;
+            color: #38bdf8;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            border: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Üst Menü -->
+    <nav class="navbar custom-navbar py-3 position-relative">
+        <div class="container d-flex justify-content-center">
+            <i class="bi bi-database-fill-gear text-white" style="font-size: 2.2rem;"></i>
+        </div>
+        {% if connected %}
+        <div class="position-absolute end-0 pe-4" style="top: 50%; transform: translateY(-50%);">
+            <a href="/disconnect" class="btn btn-outline-light btn-sm fw-medium border-1 shadow-sm">
+                <i class="bi bi-box-arrow-right me-1"></i> Çıkış
+            </a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="container flex-grow-1">
+        {% if not connected %}
+        <!-- BAĞLANTI EKRANI (Yukarıdan boşluklu, her zaman tam görünür) -->
+        <div class="row justify-content-center mt-2 mb-5">
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-shield-lock text-primary-blue mb-2" style="font-size: 2.5rem;"></i>
+                        <h5 class="fw-bold text-dark">Sunucu Bağlantısı</h5>
+                        <p class="text-muted small">Erişim sağlamak için veritabanı bilgilerini girin.</p>
+                    </div>
+                    
+                    {% if error %}
+                    <div class="alert alert-danger py-2 small fw-medium text-center border-0 bg-danger text-white">{{ error }}</div>
+                    {% endif %}
+
+                    <form action="/connect" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small text-secondary">SUNUCU (SERVER)</label>
+                            <input type="text" class="form-control" name="server" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small text-secondary">VERİTABANI (DATABASE)</label>
+                            <input type="text" class="form-control" name="database" required>
+                        </div>
+                        <button type="submit" class="btn btn-action w-100 py-2">Bağlantı Kur</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- ANA PANEL EKRANI -->
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <div class="row g-3 align-items-center mb-4">
+                    <div class="col-md-5">
+                        <label class="form-label fw-semibold small text-secondary">HEDEF TABLO</label>
+                        <select id="tableSelect" class="form-select" onchange="loadColumns()">
+                            <option value="">Yükleniyor...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="filterSection" style="display: none;">
+                    <label class="form-label fw-semibold small text-secondary mb-3">SORGULAMA PARAMETRELERİ (OPSİYONEL)</label>
+                    <div id="filterRows"></div>
+                    <button class="btn btn-sm btn-light border mt-2 fw-medium text-secondary shadow-sm" onclick="addFilterRow()">
+                        <i class="bi bi-plus-circle me-1"></i> Yeni Kural Ekle
+                    </button>
+                </div>
+                
+                <hr class="my-4" style="border-color: var(--border-color);">
+                <button class="btn btn-action w-100 py-2" onclick="executeSql()">
+                    <i class="bi bi-play-fill me-1"></i> Sorguyu Çalıştır
+                </button>
+            </div>
+        </div>
+
+        <!-- SONUÇ EKRANI -->
+        <div class="card" id="resultCard" style="display: none;">
+            <div class="card-header dark-sql-header d-flex justify-content-between align-items-center py-3 px-4">
+                <span class="fw-semibold small text-light">ÜRETİLEN SÖZDİZİMİ (SQL)</span>
+                <span id="sqlOutput" class="sql-box"></span>
+            </div>
+            <div class="card-body overflow-auto bg-white" style="max-height: 450px; padding: 0;">
+                <table class="table" id="resultTable">
+                    <thead id="resultHead"></thead>
+                    <tbody id="resultBody"></tbody>
+                </table>
+            </div>
+            <div class="card-footer text-end fw-semibold text-secondary py-2 px-4" id="recordCount">
+                0 satır döndürüldü.
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 text-center custom-footer">
+        <div class="d-flex justify-content-center gap-4">
+            <a href="https://github.com/MericAkman" target="_blank" class="social-icon" title="GitHub">
+                <i class="bi bi-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/meri%C3%A7-akman-299229286/" target="_blank" class="social-icon" title="LinkedIn">
+                <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="mailto:meric.akman01@gmail.com" class="social-icon" title="E-posta">
+                <i class="bi bi-envelope-fill"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    {% if connected %}
+    <script>
+        let schemaData = {};
+        let currentColumns = [];
+
+        fetch('/api/schema')
+            .then(res => res.json())
+            .then(data => {
+                schemaData = data;
+                const select = document.getElementById('tableSelect');
+                select.innerHTML = '<option value="">-- Tablo Seçin --</option>';
+                for (let table in data) {
+                    select.innerHTML += `<option value="${table}">${table}</option>`;
+                }
+            });
+
+        function loadColumns() {
+            const table = document.getElementById('tableSelect').value;
+            if (!table) {
+                document.getElementById('filterSection').style.display = 'none';
+                return;
+            }
+            currentColumns = schemaData[table];
+            document.getElementById('filterSection').style.display = 'block';
+            document.getElementById('filterRows').innerHTML = ''; 
+            addFilterRow();
+        }
+
+        function addFilterRow() {
+            let colOptions = currentColumns.map(c => `<option value="${c}">${c}</option>`).join('');
+            let rowId = 'filter_' + Math.random().toString(36).substr(2, 9);
+            
+            let rowHtml = `
+                <div class="row g-2 mb-3 filter-row align-items-center">
+                    <div class="col-md-4">
+                        <select class="form-select column-select" onchange="fetchColumnValues(this, '${rowId}')">${colOptions}</select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select operator-select">
+                            <option value="=">Eşittir (=)</option>
+                            <option value=">">Büyüktür (>)</option>
+                            <option value="<">Küçüktür (<)</option>
+                            <option value="LIKE">İçerir (LIKE)</option>
+                            <option value="!=">Eşit Değildir (!=)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control value-input" list="${rowId}_datalist" placeholder="Değer...">
+                        <datalist id="${rowId}_datalist"></datalist>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-outline-secondary border-0 w-100 shadow-sm" onclick="this.parentElement.parentElement.remove()" title="Kuralı Sil">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('filterRows').insertAdjacentHTML('beforeend', rowHtml);
+            
+            const newRow = document.getElementById('filterRows').lastElementChild;
+            const newSelect = newRow.querySelector('.column-select');
+            fetchColumnValues(newSelect, rowId);
+        }
+
+        function fetchColumnValues(selectElement, rowId) {
+            const table = document.getElementById('tableSelect').value;
+            const column = selectElement.value;
+            const datalist = document.getElementById(rowId + '_datalist');
+            
+            if (!table || !column) return;
+            
+            fetch('/api/values', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ table: table, column: column })
+                //table ve column etiketli değişkenlerği alcağız daha sonrasında
+            })
+            .then(res => res.json())
+            .then(values => {
+                datalist.innerHTML = '';
+                values.forEach(val => {
+                    let option = document.createElement('option');
+                    option.value = val;
+                    datalist.appendChild(option);
+                });
+            });
+        }
+
+        function executeSql() {
+            const table = document.getElementById('tableSelect').value;
+            if (!table) return;
+
+            const filterRows = document.querySelectorAll('.filter-row');
+            const filters = [];
+
+            filterRows.forEach(row => {
+                const val = row.querySelector('.value-input').value.trim();
+                if (val) {
+                    let operator = row.querySelector('.operator-select').value;
+                    let finalVal = operator === 'LIKE' ? `%${val}%` : val;
+                    filters.push({
+                        column: row.querySelector('.column-select').value,
+                        operator: operator,
+                        value: finalVal
+                    });
+                }
+            });
+
+            fetch('/api/execute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ table: table, filters: filters })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) return alert("Sorgu Hatası: " + data.error);
+
+                document.getElementById('resultCard').style.display = 'block';
+                document.getElementById('sqlOutput').innerText = data.sql;
+                
+                document.getElementById('recordCount').innerText = `${data.results.length} satır döndürüldü.`;
+
+                const thead = document.getElementById('resultHead');
+                const tbody = document.getElementById('resultBody');
+                thead.innerHTML = '';
+                tbody.innerHTML = '';
+
+                if (data.results.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="100%" class="text-center py-4 text-muted small">Bu kriterlere uygun kayıt bulunamadı.</td></tr>';
+                    return;
+                }
+
+                let headers = Object.keys(data.results[0]);
+                let headTr = document.createElement('tr');
+                headers.forEach(h => {
+                    let th = document.createElement('th');
+                    th.innerText = h;
+                    headTr.appendChild(th);
+                });
+                thead.appendChild(headTr);
+
+                data.results.forEach(row => {
+                    let tr = document.createElement('tr');
+                    headers.forEach(h => {
+                        let td = document.createElement('td');
+                        td.innerText = row[h] !== null ? row[h] : 'NULL';
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+    </script>
+    {% endif %}
+</body>
+</html>
