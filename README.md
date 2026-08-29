@@ -38,17 +38,20 @@ Kullanıcı arayüzünde temiz ve kurumsal bir görünüm elde etmek için **Boo
 
 Aşağıda uygulamanın kullanım akışını gösteren ekran görüntüleri yer almaktadır:
 
-![Giriş Ekranı ve Sunucu Bağlantısı](images/1.png)
+<p align="center">
+  <img src="images/1.png" width="49%" alt="Giriş Ekranı ve Sunucu Bağlantısı" />
+  <img src="images/2.png" width="49%" alt="Giriş Ekranı ve Sunucu Bağlantısı" />
+</p>
 
-![Veritabanı Şema Yüklemesi](images/2.png)
+<p align="center">
+  <img src="images/3.png" width="49%" alt="Tablo ve Filtre Seçimi" />
+  <img src="images/4.png" width="49%" alt="Tablo ve Filtre Seçimi " />
+</p>
 
-![Tablo ve Filtre Seçimi](images/3.png)
-
-![Dinamik Sütun Değerleri (Autocomplete)](images/4.png)
-
-![Çoklu Kural Ekleme](images/5.png)
-
-![Sorgu Sonuçları ve Üretilen SQL](images/6.png)
+<p align="center">
+  <img src="images/5.png" width="49%" alt="Tablo ve Filtre Seçimi" />
+  <img src="images/6.png" width="49%" alt="Sorgu Sonuçları ve Üretilen SQL" />
+</p>
 
 ## 💻 Kurulum ve Çalıştırma
 
