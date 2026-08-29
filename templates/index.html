@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary-dark: #0f172a;    /* Koyu Lacivert */
-            --primary-blue: #2563eb;    /* Kurumsal Mavi */
-            --primary-hover: #1d4ed8;   /* Koyu Mavi (Hover) */
-            --bg-color: #beddfa;        /* Arka plan rengi */
-            --border-color: #93c5fd;    /* Uyumlu Kenarlık Rengi */
-            --text-main: #334155;       /* Metin Rengi */
+            --primary-dark: #0f172a;  
+            --primary-blue: #2563eb;   
+            --primary-hover: #1d4ed8;   
+            --bg-color: #beddfa;        
+            --border-color: #93c5fd;    
+            --text-main: #334155;       
         }
         
         body { 
@@ -28,7 +28,7 @@
         .bg-primary-dark { background-color: var(--primary-dark) !important; color: white; }
         .text-primary-blue { color: var(--primary-blue) !important; }
         
-        /* Margin ve Border-Radius Eklenmiş Üst Menü */
+        /* Header */
         .custom-navbar {
             background-color: var(--primary-dark);
             margin: 16px 16px 24px 16px;
@@ -36,7 +36,7 @@
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
         }
 
-        /* Kart Tasarımı (Sabit) */
+        /* 1.kart */
         .card {
             border-radius: 8px;
             border: 1px solid var(--border-color) !important;
@@ -44,7 +44,7 @@
             background-color: #ffffff;
         }
 
-        /* Form Elemanları */
+        
         .form-control, .form-select {
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -58,7 +58,7 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
         }
 
-        /* Butonlar ve Hover Efekti */
+        /* Buton */
         .btn-action { 
             background-color: var(--primary-blue); 
             color: white; 
@@ -76,7 +76,7 @@
             box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
         }
 
-        /* Tablo Tasarımı */
+        
         .table {
             font-size: 0.9rem;
             margin-bottom: 0;
@@ -101,7 +101,7 @@
             border-color: #e2e8f0;
         }
 
-        /* Alt Bilgi (Footer) Alanları */
+        /* Footer */
         .card-footer {
             border-top: 1px solid var(--border-color);
             background-color: #f8fafc;
@@ -110,7 +110,7 @@
             font-size: 0.85rem;
         }
 
-        /* Sosyal İkonlar ve Hover Efekti */
+        /* Ikonlar */
         .social-icon {
             color: #475569;
             font-size: 1.5rem;
@@ -121,7 +121,7 @@
             transform: translateY(-3px);
         }
 
-        /* Sayfa Footer Alanı */
+        /* Footer */
         .custom-footer {
             border-top: none;
             background-color: var(--bg-color);
@@ -129,7 +129,7 @@
             border-top-right-radius: 16px;
         }
 
-        /* Tamamen Koyu Mod SQL Alanı */
+        
         .dark-sql-header {
             background-color: #0b0f19 !important;
             border-top-left-radius: 8px;
@@ -164,7 +164,7 @@
 
     <div class="container flex-grow-1">
         {% if not connected %}
-        <!-- BAĞLANTI EKRANI (Yukarıdan boşluklu, her zaman tam görünür) -->
+        <!-- BAĞLANTI EKRANI -->
         <div class="row justify-content-center mt-2 mb-5">
             <div class="col-md-5">
                 <div class="card p-4">
@@ -193,6 +193,7 @@
             </div>
         </div>
         {% else %}
+        
         <!-- ANA PANEL EKRANI -->
         <div class="card mb-4">
             <div class="card-body p-4">
