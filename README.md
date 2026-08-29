@@ -1,14 +1,18 @@
 # SQL_automation
 Python ve Flask kullanılarak geliştirilmiş, görsel arayüz üzerinden güvenli MSSQL sorgu otomasyonu uygulaması.
 
-## Kullanılan Araçlar ve Teknolojiler
+# 🚀 SQL Sorgu Otomasyonu
+
+Kullanıcıların SQL sözdizimi yazmasına gerek kalmadan, MS SQL Server veritabanlarına bağlanarak dinamik filtreleme ve sorgulama yapmasını sağlayan web tabanlı bir araçtır. 
+
+## 🛠️ Kullanılan Araçlar ve Teknolojiler
 
 *   **Backend:** Python, Flask
 *   **Veritabanı Sürücüsü:** pyodbc, MS SQL Server
 *   **Frontend:** HTML5, CSS3, Vanilla JavaScript, Bootstrap 5
 *   **Güvenlik:** Parametrik SQL Sorguları (SQL Injection koruması), OS Urandom (Oturum şifreleme)
 
-## Geliştirme Süreci ve Alınan Kararlar
+## 🧠 Geliştirme Süreci ve Alınan Kararlar
 
 Proje, manuel veritabanı işlemlerini otomatize etmek ve son kullanıcı için görselleştirilmiş bir sorgu ekranı sunmak amacıyla geliştirilmiştir. Süreç şu mimari kararlar doğrultusunda ilerlemiştir:
 
@@ -30,24 +34,34 @@ Kullanıcıdan alınan verilerin doğrudan SQL stringine birleştirilmesi ciddi 
 **6. Frontend ve UI Tasarımı**
 Kullanıcı arayüzünde temiz ve kurumsal bir görünüm elde etmek için **Bootstrap 5** grid sistemi kullanıldı. Ağır frameworkler yerine Vanilla JS ile DOM manipülasyonu yapıldı. Tasarımda görsel karmaşayı önlemek için hover efektleri, sabit gölgelendirmeler ve belirgin hiyerarşik renk paleti (Koyu Lacivert ve Kurumsal Mavi) özel CSS ile kodlandı.
 
-## Ekran Görüntüleri
+## 📸 Ekran Görüntüleri
 
 Aşağıda uygulamanın kullanım akışını gösteren ekran görüntüleri yer almaktadır:
 
 ![Giriş Ekranı ve Sunucu Bağlantısı](images/1.png)
 
-![Giriş Ekranı ve Sunucu Bağlantısı](images/2.png)
+![Veritabanı Şema Yüklemesi](images/2.png)
 
-![Tablo Seçimi](images/3.png)
+![Tablo ve Filtre Seçimi](images/3.png)
 
-![Filtre Seçimi](images/4.png)
+![Dinamik Sütun Değerleri (Autocomplete)](images/4.png)
 
-![Filtre Seçimi](images/5.png)
+![Çoklu Kural Ekleme](images/5.png)
 
 ![Sorgu Sonuçları ve Üretilen SQL](images/6.png)
 
-## Kurulum ve Çalıştırma
+## 💻 Kurulum ve Çalıştırma
 
 1. Gerekli Python kütüphanelerini yükleyin:
    ```bash
    pip install flask pyodbc
+
+   Uygulamayı başlatın:
+
+Bash
+python app.py
+
+Tarayıcınızdan terminal üzerinde çıkan adrese giderek arayüze erişin.
+
+👨‍💻 Geliştirici
+Meriç Akman - GitHub Profili
