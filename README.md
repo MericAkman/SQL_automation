@@ -34,17 +34,17 @@ Kullanıcı arayüzünde temiz ve kurumsal bir görünüm elde etmek için **Boo
 
 Aşağıda uygulamanın kullanım akışını gösteren ekran görüntüleri yer almaktadır:
 
-![Giriş Ekranı ve Sunucu Bağlantısı](images/1.jpg)
+![Giriş Ekranı ve Sunucu Bağlantısı](images/1.png)
 
-![Veritabanı Şema Yüklemesi](images/2.jpg)
+![Giriş Ekranı ve Sunucu Bağlantısı](images/2.png)
 
-![Tablo ve Filtre Seçimi](images/3.jpg)
+![Tablo Seçimi](images/3.png)
 
-![Dinamik Sütun Değerleri (Autocomplete)](images/4.jpg)
+![Filtre Seçimi](images/4.png)
 
-![Çoklu Kural Ekleme](images/5.jpg)
+![Filtre Seçimi](images/5.png)
 
-![Sorgu Sonuçları ve Üretilen SQL](images/6.jpg)
+![Sorgu Sonuçları ve Üretilen SQL](images/6.png)
 
 ## Kurulum ve Çalıştırma
 
