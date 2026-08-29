@@ -56,12 +56,11 @@ Aşağıda uygulamanın kullanım akışını gösteren ekran görüntüleri yer
    ```bash
    pip install flask pyodbc
 
-   Uygulamayı başlatın:
-
+2.Uygulamayı başlatın:
 Bash
 python app.py
 
-Tarayıcınızdan terminal üzerinde çıkan adrese giderek arayüze erişin.
+3.Tarayıcınızdan terminal üzerinde çıkan adrese giderek arayüze erişin.
 
 👨‍💻 Geliştirici
-Meriç Akman - GitHub Profili
+Meriç Akman [https://github.com/MericAkman]
