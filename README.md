@@ -57,8 +57,8 @@ Aşağıda uygulamanın kullanım akışını gösteren ekran görüntüleri yer
    pip install flask pyodbc
 
 2. Uygulamayı başlatın:
-Bash
-python app.py
+   ```bash
+   pip install flask pyodbc
 
 3. Tarayıcınızdan terminal üzerinde çıkan adrese giderek arayüze erişin.
 
