@@ -63,5 +63,5 @@ python app.py
 3.Tarayıcınızdan terminal üzerinde çıkan adrese giderek arayüze erişin.
 
 
-##👨‍💻 Geliştirici
+## 👨‍💻 Geliştirici
 **[Meriç Akman](https://github.com/MericAkman)**
